@@ -7,7 +7,7 @@ import logging
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
 
-direccionDescargas = r"C:\Users\Juli\Downloads"
+direccion = r''
 
 
 extensiones_imagenes = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.webp', '.svg', '.ico', '.eps']
@@ -19,20 +19,22 @@ extensiones_ejecutables = ['.exe', '.msi', '.app', '.bat', '.sh', '.jar', '.deb'
 extensiones_codigo = ['.py', '.cpp', '.c', '.java', '.js', '.html', '.css', '.php', '.rb', '.swift']
 extensiones_bases_datos = ['.db', '.sql', '.mdb', '.accdb', '.sqlite', '.dbf', '.csv', '.dat', '.xml', '.json']
 
-direccionImagenes = r'C:\Users\Juli\Desktop\Imagenes'
-direccionVideos = r'C:\\Users\\Juli\\Desktop\\Videos'
-direccionDocumentos = r'C:\Users\Juli\Desktop\Documentos'
-direccionAudios = r'C:\Users\Juli\Desktop\Audios'
-direccionComprimidos = r'C:\Users\Juli\Desktop\Comprimidos'
-direccionEjecutables = r'C:\Users\Juli\Desktop\Ejecutables'
-direccionCodigos = r'C:\Users\Juli\Desktop\Codigos'
-direccionBasesdedatos = r'C:\Users\Juli\Desktop\Basesdedatos'
-direccionVarios = r'C:\Users\Juli\Desktop\Varios'
+# Dirección a donde quiero que se manden los archivos, dependiendo el tipo
+direccionImagenes = r''
+direccionVideos = r''
+direccionDocumentos = r''
+direccionAudios = r''
+direccionComprimidos = r''
+direccionEjecutables = r''
+direccionCodigos = r''
+direccionBasesdedatos = r''
+direccionVarios = r''
 
 
 class CambiaDirecciones(FileSystemEventHandler):
+    # Mientras corre el codigo, cada que se realiza un cambio en la dirección de "direccionDescargas" se organizan los archivos
     def on_modified(self, evento):
-        with scandir(direccionDescargas) as archivos:
+        with scandir(direccion) as archivos:
             for archivo in archivos:
                 nombre = archivo.name
                 self.checkearImagen(archivo, nombre)
@@ -97,7 +99,7 @@ if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s - %(message)s',
                         datefmt='%Y-%m-%d %H:%M:%S')
-    path = direccionDescargas
+    path = direccion
     event_handler = CambiaDirecciones()
     observer = Observer()
     observer.schedule(event_handler, path, recursive=True)
